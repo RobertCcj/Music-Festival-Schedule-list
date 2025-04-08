@@ -1,43 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import ScheduleTable from '../components/ScheduleTable';
 import StageFilter from '../components/StageFilter';
-
-const stages = [
-  { id: 'rainbowHeaven', name: '雨霸天', color: 'bg-green-400' },
-  { id: 'seaKing', name: '海龍王', color: 'bg-purple-400' },
-  { id: 'goddessTemple', name: '女神龍', color: 'bg-pink-500' },
-  { id: 'seaWave', name: '海波浪', color: 'bg-blue-400' },
-  { id: 'cardMagic', name: '卡魔麥', color: 'bg-red-400' },
-  { id: 'sunHead', name: '出頭天', color: 'bg-yellow-400' },
-  { id: 'bigMagic', name: '大魔丸', color: 'bg-orange-500' },
-  { id: 'blueStone', name: '藍寶石', color: 'bg-blue-600' },
-  { id: 'youthSpring', name: '青春夢', color: 'bg-pink-400' },
-  { id: 'smallPort', name: '小港祭', color: 'bg-orange-300' }
-];
+import { megaportStages, wildSeasonStages } from '../data/stages';
+import { fetchSchedule, getUserSelectedPerformances, togglePerformanceSelection } from '../lib/api';
 
 function PersonalSchedule() {
-  const [selectedStages, setSelectedStages] = useState(stages.map(stage => stage.id));
+  const [selectedStages, setSelectedStages] = useState([]);
   const [selectedPerformances, setSelectedPerformances] = useState(new Set());
+  const [performances, setPerformances] = useState([]);
+  const [currentDate, setCurrentDate] = useState('2025-03-29');
+  const [currentFestival, setCurrentFestival] = useState('megaport');
+
+  const stages = currentFestival === 'megaport' ? megaportStages : wildSeasonStages;
+
+  useEffect(() => {
+    setSelectedStages(stages.map(stage => stage.id));
+  }, [currentFestival, stages]);
+
+  useEffect(() => {
+    const loadSchedule = async () => {
+      try {
+        const scheduleData = await fetchSchedule(currentFestival, currentDate);
+        setPerformances(scheduleData.performances);
+
+        const userSelections = await getUserSelectedPerformances();
+        setSelectedPerformances(new Set(userSelections));
+      } catch (error) {
+        console.error('Failed to load schedule:', error);
+      }
+    };
+
+    loadSchedule();
+  }, [currentDate, currentFestival]);
 
   const handleStageToggle = (stageId) => {
-    setSelectedStages(prev => 
+    setSelectedStages(prev =>
       prev.includes(stageId)
         ? prev.filter(id => id !== stageId)
         : [...prev, stageId]
     );
   };
 
-  const handlePerformanceToggle = (performanceId) => {
-    setSelectedPerformances(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(performanceId)) {
-        newSet.delete(performanceId);
-      } else {
+  const handlePerformanceToggle = async (performanceId) => {
+    try {
+      const newSet = new Set(selectedPerformances);
+      const isSelected = !newSet.has(performanceId);
+
+      await togglePerformanceSelection(performanceId, isSelected);
+
+      if (isSelected) {
         newSet.add(performanceId);
+      } else {
+        newSet.delete(performanceId);
       }
-      return newSet;
-    });
+
+      setSelectedPerformances(newSet);
+    } catch (error) {
+      console.error('Failed to toggle performance:', error);
+    }
+  };
+
+  const handleDateChange = (date) => {
+    setCurrentDate(date);
+  };
+
+  const handleFestivalChange = (festival) => {
+    setCurrentFestival(festival);
   };
 
   const filteredStages = stages.filter(stage => selectedStages.includes(stage.id));
@@ -46,24 +75,71 @@ function PersonalSchedule() {
     <div className="min-h-screen flex flex-col">
       <Header showMenu={true} />
       <div className="flex-1 flex flex-col">
-        {/* 上半部分：個人行程與舞台選擇 */}
         <div className="sticky top-0 bg-white z-30 w-full border-b">
           <div className="max-w-[60%] mx-auto w-full p-4">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold">個人行程</h1>
-              <StageFilter 
-                stages={stages}
-                selectedStages={selectedStages}
-                onToggle={handleStageToggle}
-              />
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-4">
+                <h1 className="text-2xl font-bold">個人行程</h1>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleDateChange('2025-03-29')}
+                    className={`px-4 py-2 rounded-lg transition-colors ${
+                      currentDate === '2025-03-29'
+                        ? 'bg-[#EF6D21] text-white'
+                        : 'bg-gray-200 text-gray-700'
+                    }`}
+                  >
+                    3/29
+                  </button>
+                  <button
+                    onClick={() => handleDateChange('2025-03-30')}
+                    className={`px-4 py-2 rounded-lg transition-colors ${
+                      currentDate === '2025-03-30'
+                        ? 'bg-[#EF6D21] text-white'
+                        : 'bg-gray-200 text-gray-700'
+                    }`}
+                  >
+                    3/30
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleFestivalChange('megaport')}
+                    className={`px-4 py-2 rounded-lg transition-colors ${
+                      currentFestival === 'megaport'
+                        ? 'bg-[#EF6D21] text-white'
+                        : 'bg-gray-200 text-gray-700'
+                    }`}
+                  >
+                    大港開唱
+                  </button>
+                  <button
+                    onClick={() => handleFestivalChange('wild')}
+                    className={`px-4 py-2 rounded-lg transition-colors ${
+                      currentFestival === 'wild'
+                        ? 'bg-[#EF6D21] text-white'
+                        : 'bg-gray-200 text-gray-700'
+                    }`}
+                  >
+                    野人季
+                  </button>
+                </div>
+                <StageFilter
+                  stages={stages}
+                  selectedStages={selectedStages}
+                  onToggle={handleStageToggle}
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* 表格區域 */}
         <div className="flex-1">
           <div className="max-w-[60%] mx-auto w-full">
-            <div className="overflow-auto max-h-[calc(100vh-140px)]">
+            <div className="overflow-auto max-h-[calc(100vh-180px)]">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
@@ -71,8 +147,8 @@ function PersonalSchedule() {
                       時間
                     </th>
                     {filteredStages.map(stage => (
-                      <th 
-                        key={stage.id} 
+                      <th
+                        key={stage.id}
                         className={`sticky top-0 z-20 ${stage.color} text-white p-2 min-w-[160px]`}
                       >
                         {stage.name}
@@ -81,10 +157,12 @@ function PersonalSchedule() {
                   </tr>
                 </thead>
                 <tbody>
-                  <ScheduleTable 
+                  <ScheduleTable
                     stages={filteredStages}
                     selectedPerformances={selectedPerformances}
                     onPerformanceToggle={handlePerformanceToggle}
+                    performances={performances}
+                    date={currentDate}
                   />
                 </tbody>
               </table>

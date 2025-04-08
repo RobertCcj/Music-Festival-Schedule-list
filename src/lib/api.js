@@ -1,8 +1,7 @@
-import { Performance, ScheduleDay } from '../types/schedule';
 import { getPerformancesByFestivalAndDate } from '../data/performances';
 
-export async function fetchSchedule(festival: string, date: string): Promise<ScheduleDay> {
-  // 模擬 API 呼叫
+// 模擬取得當天節目表資料
+export async function fetchSchedule(festival, date) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -13,8 +12,8 @@ export async function fetchSchedule(festival: string, date: string): Promise<Sch
   });
 }
 
-export async function togglePerformanceSelection(performanceId: string, selected: boolean): Promise<void> {
-  // 模擬 API 呼叫
+// 模擬選擇/取消某節目的 API 呼叫
+export async function togglePerformanceSelection(performanceId, selected) {
   return new Promise((resolve) => {
     setTimeout(() => {
       console.log(`Toggle performance ${performanceId} to ${selected}`);
@@ -23,11 +22,11 @@ export async function togglePerformanceSelection(performanceId: string, selected
   });
 }
 
-export async function getUserSelectedPerformances(): Promise<string[]> {
-  // 模擬 API 呼叫
+// 模擬取得使用者已選的節目 ID
+export async function getUserSelectedPerformances() {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve([]);
+      resolve([]); // 可改成回傳假資料測試
     }, 100);
   });
 }

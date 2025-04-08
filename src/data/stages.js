@@ -1,6 +1,6 @@
-import { Stage } from '../types/schedule';
+// stages.js
 
-export const megaportStages: Stage[] = [
+export const megaportStages = [
   { id: 'rainbow-heaven', name: '南霸天', color: 'bg-green-400' },
   { id: 'sea-king', name: '海龍王', color: 'bg-purple-400' },
   { id: 'goddess-temple', name: '女神龍', color: 'bg-pink-500' },
@@ -12,7 +12,7 @@ export const megaportStages: Stage[] = [
   { id: 'small-port', name: '小港祭', color: 'bg-orange-300' }
 ];
 
-export const wildSeasonStages: Stage[] = [
+export const wildSeasonStages = [
   { id: 'stage-1', name: '舞台1', color: 'bg-emerald-400' },
   { id: 'stage-2', name: '舞台2', color: 'bg-violet-400' },
   { id: 'stage-3', name: '舞台3', color: 'bg-amber-400' }

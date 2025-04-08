@@ -1,6 +1,4 @@
-import { Performance } from '../types/schedule';
-
-export const megaportPerformances: Performance[] = [
+export const megaportPerformances = [
   // 3/29 南霸天
   {
     id: 'heartbreak-0329',
@@ -55,7 +53,7 @@ export const megaportPerformances: Performance[] = [
   }
 ];
 
-export const wildSeasonPerformances: Performance[] = [
+export const wildSeasonPerformances = [
   // Stage 1
   {
     id: 'wild-1-1',
@@ -135,7 +133,7 @@ export const wildSeasonPerformances: Performance[] = [
   }
 ];
 
-export function getPerformancesByFestivalAndDate(festival: string, date: string): Performance[] {
+export function getPerformancesByFestivalAndDate(festival, date) {
   const performances = festival === 'megaport' ? megaportPerformances : wildSeasonPerformances;
   return performances.filter(performance => performance.date === date);
 }
