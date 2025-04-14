@@ -74,10 +74,14 @@ function PersonalSchedule() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header showMenu={true} />
-      <div className="flex-1 flex flex-col">
+  
+      {/* 加上 pt-16 來避開 fixed header 的高度 */}
+      <div className="flex-1 flex flex-col pt-16">
+        {/* 上半部分：控制區 */}
         <div className="sticky top-0 bg-white z-30 w-full border-b">
           <div className="max-w-[60%] mx-auto w-full p-4">
             <div className="flex flex-col gap-4">
+              {/* 日期切換 */}
               <div className="flex items-center gap-4">
                 <h1 className="text-2xl font-bold">個人行程</h1>
                 <div className="flex gap-2">
@@ -103,7 +107,8 @@ function PersonalSchedule() {
                   </button>
                 </div>
               </div>
-
+  
+              {/* 音樂祭與舞台選擇 */}
               <div className="flex items-center gap-4">
                 <div className="flex gap-2">
                   <button
@@ -124,7 +129,7 @@ function PersonalSchedule() {
                         : 'bg-gray-200 text-gray-700'
                     }`}
                   >
-                    野人季
+                    野人祭
                   </button>
                 </div>
                 <StageFilter
@@ -136,10 +141,11 @@ function PersonalSchedule() {
             </div>
           </div>
         </div>
-
+  
+        {/* 下半部分表格 */}
         <div className="flex-1">
           <div className="max-w-[60%] mx-auto w-full">
-            <div className="overflow-auto max-h-[calc(100vh-180px)]">
+          <div className="overflow-auto max-h-[calc(100vh-200px)] pb-4">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
@@ -172,6 +178,7 @@ function PersonalSchedule() {
       </div>
     </div>
   );
+  
 }
 
 export default PersonalSchedule;

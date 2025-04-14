@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 // Generate time slots from 12:30 to 22:10
 const timeSlots = [];
 for (let hour = 12; hour <= 22; hour++) {
-  for (let minute of ['00', '10', '20', '30', '40', '50']) {
-    if (hour === 22 && minute === '10') {
+  for (let minute of ["00", "10", "20", "30", "40", "50"]) {
+    if (hour === 22 && minute === "10") {
       timeSlots.push(`${hour}:${minute}`);
       break;
     }
@@ -19,11 +19,21 @@ const calculateTimeSpan = (startTime, endTime) => {
   return Math.max(1, endIndex - startIndex + 1);
 };
 
-function ScheduleTable({ stages, selectedPerformances, onPerformanceToggle, performances, date }) {
+function ScheduleTable({
+  stages,
+  selectedPerformances,
+  onPerformanceToggle,
+  performances,
+  date,
+}) {
   const getPerformanceStyle = (performance, stage) => {
     const isSelected = selectedPerformances.has(performance.id);
     return `
-      ${isSelected ? 'bg-gray-700 text-white' : `${stage.color} bg-opacity-80 text-white`}
+      ${
+        isSelected
+          ? "bg-gray-700 text-white"
+          : `${stage.color} bg-opacity-80 text-white`
+      }
       flex items-center justify-center text-center whitespace-pre-line
       hover:opacity-90 transition-opacity cursor-pointer rounded-lg
       h-full px-2 py-1 text-sm font-medium
@@ -32,11 +42,16 @@ function ScheduleTable({ stages, selectedPerformances, onPerformanceToggle, perf
 
   // Create a map to track which cells should be rendered
   const occupiedCells = new Map();
-  stages.forEach(stage => {
-    const stagePerformances = performances.filter(p => p.stageId === stage.id && p.date === date);
-    stagePerformances.forEach(performance => {
+  stages.forEach((stage) => {
+    const stagePerformances = performances.filter(
+      (p) => p.stageId === stage.id && p.date === date
+    );
+    stagePerformances.forEach((performance) => {
       const startIndex = timeSlots.indexOf(performance.startTime);
-      const span = calculateTimeSpan(performance.startTime, performance.endTime);
+      const span = calculateTimeSpan(
+        performance.startTime,
+        performance.endTime
+      );
       for (let i = 0; i < span; i++) {
         occupiedCells.set(`${stage.id}-${timeSlots[startIndex + i]}`, true);
       }
@@ -54,15 +69,21 @@ function ScheduleTable({ stages, selectedPerformances, onPerformanceToggle, perf
           <td className="sticky left-0 bg-white z-10 text-center text-sm px-2 text-gray-600 font-medium">
             {time}
           </td>
-          {stages.map(stage => {
+          {stages.map((stage) => {
             const performance = performances.find(
-              p => p.startTime === time && p.stageId === stage.id && p.date === date
+              (p) =>
+                p.startTime === time &&
+                p.stageId === stage.id &&
+                p.date === date
             );
-            
+
             if (performance) {
-              const span = calculateTimeSpan(performance.startTime, performance.endTime);
+              const span = calculateTimeSpan(
+                performance.startTime,
+                performance.endTime
+              );
               return (
-                <td 
+                <td
                   key={`${stage.id}-${time}`}
                   rowSpan={span}
                   className="relative p-1"
@@ -70,8 +91,21 @@ function ScheduleTable({ stages, selectedPerformances, onPerformanceToggle, perf
                   <div
                     onClick={() => onPerformanceToggle(performance.id)}
                     className={getPerformanceStyle(performance, stage)}
+                    style={{
+                      height: `${
+                        calculateTimeSpan(
+                          performance.startTime,
+                          performance.endTime
+                        ) * 48
+                      }px`,
+                    }}
                   >
-                    {formatPerformanceName(performance.name, performance.country)}
+                    <div className="flex h-full items-center justify-center text-center">
+                      {formatPerformanceName(
+                        performance.name,
+                        performance.country
+                      )}
+                    </div>
                   </div>
                 </td>
               );

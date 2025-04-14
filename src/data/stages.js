@@ -7,6 +7,7 @@ export const megaportStages = [
   { id: 'sea-wave', name: '海波浪', color: 'bg-blue-400' },
   { id: 'card-magic', name: '卡魔麥', color: 'bg-red-400' },
   { id: 'sun-head', name: '出頭天', color: 'bg-yellow-400' },
+  { id: 'big-maru', name: '大雄丸', color: 'bg-red-600' },
   { id: 'blue-stone', name: '藍寶石', color: 'bg-blue-600' },
   { id: 'youth-spring', name: '青春夢', color: 'bg-pink-400' },
   { id: 'small-port', name: '小港祭', color: 'bg-orange-300' }
