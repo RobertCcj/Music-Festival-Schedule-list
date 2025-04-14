@@ -14,8 +14,14 @@ function PersonalSchedule() {
 
   const stages = currentFestival === 'megaport' ? megaportStages : wildSeasonStages;
 
+  const festivalDefaultDates = {
+    megaport: '2025-03-29',
+    wild: '2025-04-26',
+  };
+
   useEffect(() => {
     setSelectedStages(stages.map(stage => stage.id));
+    setCurrentDate(festivalDefaultDates[currentFestival]);
   }, [currentFestival, stages]);
 
   useEffect(() => {
@@ -74,40 +80,67 @@ function PersonalSchedule() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header showMenu={true} />
-  
-      {/* 加上 pt-16 來避開 fixed header 的高度 */}
+
       <div className="flex-1 flex flex-col pt-16">
-        {/* 上半部分：控制區 */}
+        {/* 控制區 */}
         <div className="sticky top-0 bg-white z-30 w-full border-b">
-          <div className="max-w-[60%] mx-auto w-full p-4">
+          <div className="w-full p-4 max-w-full md:max-w-[80%] mx-auto">
             <div className="flex flex-col gap-4">
               {/* 日期切換 */}
               <div className="flex items-center gap-4">
                 <h1 className="text-2xl font-bold">個人行程</h1>
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => handleDateChange('2025-03-29')}
-                    className={`px-4 py-2 rounded-lg transition-colors ${
-                      currentDate === '2025-03-29'
-                        ? 'bg-[#EF6D21] text-white'
-                        : 'bg-gray-200 text-gray-700'
-                    }`}
-                  >
-                    3/29
-                  </button>
-                  <button
-                    onClick={() => handleDateChange('2025-03-30')}
-                    className={`px-4 py-2 rounded-lg transition-colors ${
-                      currentDate === '2025-03-30'
-                        ? 'bg-[#EF6D21] text-white'
-                        : 'bg-gray-200 text-gray-700'
-                    }`}
-                  >
-                    3/30
-                  </button>
+                  {currentFestival === 'megaport' && (
+                    <>
+                      <button
+                        onClick={() => handleDateChange('2025-03-29')}
+                        className={`px-4 py-2 rounded-lg transition-colors ${
+                          currentDate === '2025-03-29'
+                            ? 'bg-[#EF6D21] text-white'
+                            : 'bg-gray-200 text-gray-700'
+                        }`}
+                      >
+                        3/29
+                      </button>
+                      <button
+                        onClick={() => handleDateChange('2025-03-30')}
+                        className={`px-4 py-2 rounded-lg transition-colors ${
+                          currentDate === '2025-03-30'
+                            ? 'bg-[#EF6D21] text-white'
+                            : 'bg-gray-200 text-gray-700'
+                        }`}
+                      >
+                        3/30
+                      </button>
+                    </>
+                  )}
+                  {currentFestival === 'wild' && (
+                    <>
+                      <button
+                        onClick={() => handleDateChange('2025-04-26')}
+                        className={`px-4 py-2 rounded-lg transition-colors ${
+                          currentDate === '2025-04-26'
+                            ? 'bg-[#EF6D21] text-white'
+                            : 'bg-gray-200 text-gray-700'
+                        }`}
+                      >
+                        4/26
+                      </button>
+                      <button
+                        onClick={() => handleDateChange('2025-04-27')}
+                        className={`px-4 py-2 rounded-lg transition-colors ${
+                          currentDate === '2025-04-27'
+                            ? 'bg-[#EF6D21] text-white'
+                            : 'bg-gray-200 text-gray-700'
+                        }`}
+                      >
+                        4/27
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
-  
+
               {/* 音樂祭與舞台選擇 */}
               <div className="flex items-center gap-4">
                 <div className="flex gap-2">
@@ -141,18 +174,18 @@ function PersonalSchedule() {
             </div>
           </div>
         </div>
-  
-        {/* 下半部分表格 */}
+
+        {/* 表格 */}
         <div className="flex-1">
-          <div className="max-w-[60%] mx-auto w-full">
-          <div className="overflow-auto max-h-[calc(100vh-200px)] pb-4">
+          <div className="w-full max-w-full md:max-w-[80%] mx-auto">
+            <div className="overflow-auto max-h-[calc(100vh-200px)] pb-4">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
                     <th className="sticky left-0 top-0 z-30 bg-white p-2 min-w-[80px] text-sm">
                       時間
                     </th>
-                    {filteredStages.map(stage => (
+                    {filteredStages.map((stage) => (
                       <th
                         key={stage.id}
                         className={`sticky top-0 z-20 ${stage.color} text-white p-2 min-w-[160px]`}
@@ -178,7 +211,6 @@ function PersonalSchedule() {
       </div>
     </div>
   );
-  
 }
 
 export default PersonalSchedule;

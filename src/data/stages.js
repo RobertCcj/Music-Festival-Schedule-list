@@ -14,7 +14,8 @@ export const megaportStages = [
 ];
 
 export const wildSeasonStages = [
-  { id: 'stage-1', name: '舞台1', color: 'bg-emerald-400' },
-  { id: 'stage-2', name: '舞台2', color: 'bg-violet-400' },
-  { id: 'stage-3', name: '舞台3', color: 'bg-amber-400' }
+  { id: 'tiger-roar', name: '虎嘯', color: 'bg-pink-500' },
+  { id: 'lion-roar', name: '獅吼', color: 'bg-amber-500' },
+  { id: 'leopard-warrior', name: '豹武郎', color: 'bg-purple-400' },
+  { id: 'elephant-trunk', name: '象鼻', color: 'bg-rose-300' }
 ];

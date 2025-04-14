@@ -26,20 +26,39 @@ function ScheduleTable({
   performances,
   date,
 }) {
+  // 顏色轉換(因為Tailwind預設不會編譯動態 class name)
+  const getDarkenedColor = (originalColor) => {
+    const colorMap = {
+      'bg-green-400': 'bg-green-700',
+      'bg-orange-300': 'bg-orange-600',
+      'bg-purple-400': 'bg-purple-700',
+      'bg-pink-500': 'bg-pink-800',
+      'bg-blue-400': 'bg-blue-700',
+      'bg-red-400': 'bg-red-700',
+      'bg-yellow-400': 'bg-yellow-700',
+      'bg-red-600': 'bg-red-900',
+      'bg-blue-600': 'bg-blue-900',
+      'bg-pink-400': 'bg-pink-700',
+      'bg-amber-500': 'bg-amber-800',
+      'bg-rose-300': 'bg-rose-600',
+    };
+  
+    return colorMap[originalColor] || originalColor;
+  };
+  
   const getPerformanceStyle = (performance, stage) => {
     const isSelected = selectedPerformances.has(performance.id);
+    const colorClass = isSelected
+      ? getDarkenedColor(stage.color)
+      : `${stage.color} bg-opacity-80`;
+  
     return `
-      ${
-        isSelected
-          ? "bg-gray-700 text-white"
-          : `${stage.color} bg-opacity-80 text-white`
-      }
+      ${colorClass} text-white
       flex items-center justify-center text-center whitespace-pre-line
       hover:opacity-90 transition-opacity cursor-pointer rounded-lg
       h-full px-2 py-1 text-sm font-medium
     `;
   };
-
   // Create a map to track which cells should be rendered
   const occupiedCells = new Map();
   stages.forEach((stage) => {
