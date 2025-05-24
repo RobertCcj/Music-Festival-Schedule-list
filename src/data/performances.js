@@ -54,7 +54,7 @@ export const megaportPerformances = [
   // 3/29 海龍王
   {
     id: "goodbye-chenyilang-0329",
-    name: "再會陳一郎 > 相逢大港邊",
+    name: "再會陳一郎\n>\n相逢大港邊",
     startTime: "13:10",
     endTime: "13:50",
     date: "2025-03-29",
@@ -62,7 +62,7 @@ export const megaportPerformances = [
   },
   {
     id: "vh-ft-yoyo-0329",
-    name: "VH ft. Yoyo Sham",
+    name: "VH\nft.\nYoyo Sham",
     startTime: "14:40",
     endTime: "15:20",
     date: "2025-03-29",
@@ -78,7 +78,7 @@ export const megaportPerformances = [
   },
   {
     id: "yangskinny-0329",
-    name: "ヤングスキニー yangskinny",
+    name: "ヤングスキニー\nyangskinny",
     startTime: "17:20",
     endTime: "18:00",
     date: "2025-03-29",
@@ -96,7 +96,7 @@ export const megaportPerformances = [
   },
   {
     id: "thatsmyshhh-0329",
-    name: "THAT'S MY SHHH",
+    name: "THAT'S\nMY\nSHHH",
     startTime: "20:10",
     endTime: "21:10",
     date: "2025-03-29",
@@ -137,7 +137,7 @@ export const megaportPerformances = [
   },
   {
     id: 'i-mean-us-ft-daqian-0329',
-    name: 'I Mean Us ft. 黃大謙',
+    name: 'I Mean Us\nft.\n黃大謙',
     startTime: '18:00',
     endTime: '18:40',
     date: '2025-03-29',
@@ -162,7 +162,7 @@ export const megaportPerformances = [
   // 3/29 海波浪
   {
     id: 'bremen-0329',
-    name: 'Bremen Entertainment Inc. 布萊梅',
+    name: 'Bremen\nEntertainment\nInc.\n布萊梅',
     startTime: '13:10',
     endTime: '13:50',
     date: '2025-03-29',
@@ -186,7 +186,7 @@ export const megaportPerformances = [
   },
   {
     id: 'sam-someshit-0329',
-    name: '山姆 someshit',
+    name: '山姆\nsomeshit',
     startTime: '17:10',
     endTime: '17:50',
     date: '2025-03-29',
@@ -194,7 +194,7 @@ export const megaportPerformances = [
   },
   {
     id: 'jpbs-0329',
-    name: 'JPBS (TH)',
+    name: 'JPBS\n(TH)',
     startTime: '18:40',
     endTime: '19:20',
     date: '2025-03-29',
@@ -211,7 +211,7 @@ export const megaportPerformances = [
   // 3/29 卡魔麥
   {
     id: 'mario-zwinkel-0329',
-    name: 'Mario Zwinkel (ID)',
+    name: 'Mario\nZwinkel\n(ID)',
     startTime: '13:00',
     endTime: '13:40',
     date: '2025-03-29',
@@ -227,7 +227,7 @@ export const megaportPerformances = [
   },
   {
     id: 'kook-0329',
-    name: 'KoOk 庫克',
+    name: 'KoOk\n庫克',
     startTime: '15:40',
     endTime: '16:20',
     date: '2025-03-29',
@@ -235,7 +235,7 @@ export const megaportPerformances = [
   },
   {
     id: 'beyondcure-gigo-0329',
-    name: 'Beyond Cure ft. GIGO',
+    name: 'Beyond Cure\nft. GIGO',
     startTime: '17:00',
     endTime: '17:40',
     date: '2025-03-29',
@@ -243,7 +243,7 @@ export const megaportPerformances = [
   },
   {
     id: 'goose-sg-0329',
-    name: 'Goose 我鳥 (SG)',
+    name: 'Goose\n我鳥 (SG)',
     startTime: '18:20',
     endTime: '19:00',
     date: '2025-03-29',
@@ -293,7 +293,7 @@ export const megaportPerformances = [
   /// 3/29 大雄丸
   {
     id: 'dj-yellow-yellow-0329',
-    name: 'DJ Yellow Yellow aka 黃小楨+黃玠',
+    name: 'DJ\nYellow\nYellow\naka\n黃小楨+黃玠',
     startTime: '13:00',
     endTime: '14:00',
     date: '2025-03-29',
@@ -301,7 +301,7 @@ export const megaportPerformances = [
   },
   {
     id: 'dj-white-0329',
-    name: 'DJ White aka 壞特',
+    name: 'DJ White\naka\n壞特',
     startTime: '15:00',
     endTime: '16:00',
     date: '2025-03-29',
@@ -309,7 +309,7 @@ export const megaportPerformances = [
   },
   {
     id: 'dj-orange-0329',
-    name: 'DJ Orange aka 張震嶽',
+    name: 'DJ Orange\naka\n張震嶽',
     startTime: '17:00',
     endTime: '18:00',
     date: '2025-03-29',
@@ -319,7 +319,7 @@ export const megaportPerformances = [
   // 3/29 藍寶石
   {
     id: 'siri-lee-0329',
-    name: '李竺芯 Siri Lee',
+    name: '李竺芯\nSiri Lee',
     startTime: '14:00',
     endTime: '14:40',
     date: '2025-03-29',
@@ -335,7 +335,7 @@ export const megaportPerformances = [
   },
   {
     id: 'balazwolf-tang-0329',
-    name: 'balazwolf x 唐嘉鴻',
+    name: 'balazwolf\nx\n唐嘉鴻',
     startTime: '16:40',
     endTime: '17:20',
     date: '2025-03-29',
@@ -402,7 +402,7 @@ export const megaportPerformances = [
   },
   {
     id: 'swing-dog-0329',
-    name: '#爵犬 SWING',
+    name: '#爵犬\nSWING',
     startTime: '16:00',
     endTime: '16:30',
     date: '2025-03-29',
@@ -410,7 +410,7 @@ export const megaportPerformances = [
   },
   {
     id: 'dj-whiles-davis-0329',
-    name: '[DJ] WHILES DAVIS',
+    name: '[DJ] \nWHILES DAVIS',
     startTime: '16:40',
     endTime: '17:20',
     date: '2025-03-29',
@@ -418,7 +418,7 @@ export const megaportPerformances = [
   },
   {
     id: 'bossa-dog-0329',
-    name: '#爵犬 BOSSA',
+    name: '#爵犬\n BOSSA',
     startTime: '17:30',
     endTime: '18:00',
     date: '2025-03-29',
@@ -434,7 +434,7 @@ export const megaportPerformances = [
   },
   {
     id: 'funk-dog-0329',
-    name: '#爵犬 FUNK',
+    name: '#爵犬 \nFUNK',
     startTime: '18:50',
     endTime: '19:20',
     date: '2025-03-29',
@@ -442,7 +442,7 @@ export const megaportPerformances = [
   },
   {
     id: 'dj-nevafadded-0329',
-    name: '[DJ] nevafadded',
+    name: '[DJ]\n nevafadded',
     startTime: '19:30',
     endTime: '20:50',
     date: '2025-03-29',
@@ -467,7 +467,7 @@ export const megaportPerformances = [
 },
 {
   id: "megaport-0330-3",
-  name: "Chilli Beans.",
+  name: "Chilli \nBeans.",
   startTime: "15:50",
   endTime: "16:30",
   date: "2025-03-30",
@@ -484,7 +484,7 @@ export const megaportPerformances = [
 },
 {
   id: "megaport-0330-5",
-  name: "拍謝少年 SORRY YOUTH",
+  name: "拍謝少年\n SORRY YOUTH",
   startTime: "19:20",
   endTime: "19:50",
   date: "2025-03-30",
@@ -492,7 +492,7 @@ export const megaportPerformances = [
 },
 {
   id: "megaport-0330-6",
-  name: "THE FLAMING LIPS",
+  name: "THE \nFLAMING\n LIPS",
   startTime: "20:50",
   endTime: "21:50",
   date: "2025-03-30",
@@ -503,7 +503,7 @@ export const megaportPerformances = [
 // 3/30 海龍王 (sea-king)
 {
   id: "megaport-0330-7",
-  name: "FUTURE AFTER A SECOND",
+  name: "FUTURE \nAFTER \nA SECOND",
   startTime: "13:20",
   endTime: "14:00",
   date: "2025-03-30",
@@ -837,7 +837,7 @@ export const megaportPerformances = [
 },
 {
   id: "megaport-0330-46",
-  name: "Guhit Band",
+  name: "Guhit\n Band",
   startTime: "17:20",
   endTime: "18:00",
   date: "2025-03-30",
@@ -925,7 +925,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-1-3",
-    name: "Solitude Is Bliss",
+    name: "Solitude\n Is Bliss",
     startTime: "16:00",
     endTime: "16:40",
     date: "2025-04-26",
@@ -949,7 +949,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-1-6",
-    name: "Beach Fossils",
+    name: "Beach \nFossils",
     startTime: "21:00",
     endTime: "22:00",
     date: "2025-04-26",
@@ -1023,7 +1023,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-1-15",
-    name: "YonYon with PEAVIS",
+    name: "YonYon \nwith\n PEAVIS",
     startTime: "16:50",
     endTime: "17:30",
     date: "2025-04-26",
@@ -1048,7 +1048,7 @@ export const wildSeasonPerformances = [
   // 4/26 象鼻
   {
     id: "wild-1-18",
-    name: "方舟X球王X Kendama101",
+    name: "方舟X球王\nX \nKendama101",
     startTime: "14:50",
     endTime: "15:10",
     date: "2025-04-26",
@@ -1081,7 +1081,7 @@ export const wildSeasonPerformances = [
   // 4/27 虎嘯
   {
     id: "wild-2-1",
-    name: "Bremen Entertainment Inc. 布萊梅",
+    name: "Bremen \nEntertainment\n Inc.\n 布萊梅",
     startTime: "12:40",
     endTime: "13:20",
     date: "2025-04-27",
@@ -1089,7 +1089,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-2",
-    name: "鳳小岳&壓克力柯子 ft. 阿強(88balaz)",
+    name: "鳳小岳\n&\n壓克力柯子\n ft. 阿強(88balaz)",
     startTime: "14:20",
     endTime: "15:00",
     date: "2025-04-27",
@@ -1105,7 +1105,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-4",
-    name: "Phum Viphurit",
+    name: "Phum \nViphurit",
     startTime: "17:40",
     endTime: "18:20",
     date: "2025-04-27",
@@ -1113,7 +1113,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-5",
-    name: "Hello Nico",
+    name: "Hello\n Nico",
     startTime: "19:20",
     endTime: "20:00",
     date: "2025-04-27",
@@ -1121,7 +1121,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-6",
-    name: "蛋堡 Soft Lipa",
+    name: "蛋堡\n Soft Lipa",
     startTime: "21:00",
     endTime: "21:40",
     date: "2025-04-27",
@@ -1146,7 +1146,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-9",
-    name: "百合花 Lilium",
+    name: "百合花\n Lilium",
     startTime: "16:50",
     endTime: "17:30",
     date: "2025-04-27",
@@ -1162,7 +1162,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-11",
-    name: "TOSH (band set)",
+    name: "TOSH\n (band set)",
     startTime: "20:10",
     endTime: "20:50",
     date: "2025-04-27",
@@ -1179,7 +1179,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-13",
-    name: "山姆someshiit",
+    name: "山姆\nsomeshiit",
     startTime: "13:30",
     endTime: "14:10",
     date: "2025-04-27",
@@ -1187,7 +1187,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-14",
-    name: "畫室The WLTZ",
+    name: "畫室\nThe WLTZ",
     startTime: "15:10",
     endTime: "15:50",
     date: "2025-04-27",
@@ -1195,7 +1195,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-15",
-    name: "緩緩 Huan Huan",
+    name: "緩緩\n Huan Huan",
     startTime: "16:50",
     endTime: "17:30",
     date: "2025-04-27",
@@ -1203,7 +1203,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-16",
-    name: "鬼靈少女組 ft. 黑狼貴太妊",
+    name: "鬼靈少女組\n ft.\n 黑狼貴太妊",
     startTime: "18:30",
     endTime: "19:10",
     date: "2025-04-27",
@@ -1211,7 +1211,7 @@ export const wildSeasonPerformances = [
   },
   {
     id: "wild-2-17",
-    name: "發亮仙山 ft. YonYon, PEAVIS",
+    name: "發亮仙山 \nft.\n YonYon, PEAVIS",
     startTime: "20:10",
     endTime: "20:50",
     date: "2025-04-27",
@@ -1220,7 +1220,7 @@ export const wildSeasonPerformances = [
   // 4/27 象鼻
   {
     id: "wild-2-18",
-    name: "方舟X球王X Kendama101",
+    name: "方舟X球王\nX\n Kendama101",
     startTime: "14:50",
     endTime: "15:10",
     date: "2025-04-27",
