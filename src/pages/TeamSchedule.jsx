@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Header from '../components/Header';
-import ScheduleTable from '../components/ScheduleTable';
 import StageFilter from '../components/StageFilter';
+import ScheduleTable from '../components/ScheduleTable';
 import { getPerformancesByFestivalAndDate } from '../data/performances';
 import { megaportStages, wildSeasonStages } from '../data/stages';
 
-function TeamSchedule() {
-  // 狀態管理
+export default function TeamSchedule() {
+  // === 狀態管理 ===
   const [currentFestival, setCurrentFestival] = useState('megaport');
   const [currentDate, setCurrentDate] = useState('2025-03-29');
   const [stages, setStages] = useState([]);
@@ -17,26 +17,28 @@ function TeamSchedule() {
   const [selectedTeamId, setSelectedTeamId] = useState('');
   const [showJoinModal, setShowJoinModal] = useState(false);
 
-  // 可加入的靜態團隊
+  // 可加入的靜態團隊（示範用）
   const availableTeams = [
     { id: 'teamX', name: '團隊 X' },
     { id: 'teamY', name: '團隊 Y' },
     { id: 'teamZ', name: '團隊 Z' },
   ];
 
-  // 音樂祭日期對應
+  // 各音樂祭可選日期
   const festivalDates = {
-    megaport: ['2025-3-29', '2025-3-30'],
-    wild: ['2025-4-26', '2025-4-27'],
+    megaport: ['2025-03-29', '2025-03-30'],
+    wild: ['2025-04-26', '2025-04-27'],
   };
 
-  // 初始化或當切換音樂祭／日期時載入資料
+  // 當音樂祭或日期切換時，重新載入對應的 stages 與 performances
   useEffect(() => {
     const newStages =
       currentFestival === 'megaport' ? megaportStages : wildSeasonStages;
     setStages(newStages);
+    // 預設全選所有舞台
     setSelectedStages(newStages.map((s) => s.id));
 
+    // 載入假資料
     const list = getPerformancesByFestivalAndDate(
       currentFestival,
       currentDate
@@ -45,7 +47,7 @@ function TeamSchedule() {
     setSelectedPerformances(new Set());
   }, [currentFestival, currentDate]);
 
-  // 處理舞台篩選切換
+  // 切換舞台篩選
   const handleStageToggle = (stageId) => {
     setSelectedStages((prev) =>
       prev.includes(stageId)
@@ -54,13 +56,11 @@ function TeamSchedule() {
     );
   };
 
-  // 處理節目選擇（團隊或個人共用行為）
+  // 切換節目選取（Team view 可用）
   const handlePerformanceToggle = (performanceId) => {
     setSelectedPerformances((prev) => {
       const next = new Set(prev);
-      next.has(performanceId)
-        ? next.delete(performanceId)
-        : next.add(performanceId);
+      next.has(performanceId) ? next.delete(performanceId) : next.add(performanceId);
       return next;
     });
   };
@@ -68,7 +68,7 @@ function TeamSchedule() {
   // 切換音樂祭
   const handleFestivalChange = (festival) => {
     setCurrentFestival(festival);
-    // 切換後預設選取該音樂祭的第一天
+    // 音樂祭切換後，預設第一天
     setCurrentDate(festivalDates[festival][0]);
   };
 
@@ -79,38 +79,38 @@ function TeamSchedule() {
 
   // 加入團隊
   const handleJoinTeam = (team) => {
-    if (!userTeams.find((t) => t.id === team.id)) {
+    if (!userTeams.some((t) => t.id === team.id)) {
       setUserTeams((prev) => [...prev, team]);
       setSelectedTeamId(team.id);
     }
     setShowJoinModal(false);
   };
 
-  // 篩選後的舞台
-  const filteredStages = stages.filter((s) =>
-    selectedStages.includes(s.id)
-  );
+  // 篩選後要給 ScheduleTable 的資料
+  const filteredPerformances = useMemo(() => {
+    if (selectedStages.length === 0) return performances;
+    return performances.filter((p) => selectedStages.includes(p.stageId));
+  }, [performances, selectedStages]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-hidden">
       <Header showMenu />
 
-      {/* 主區容器，預留 Header */}
+      {/* 預留 Header 高度 */}
       <div className="flex-1 flex flex-col pt-16">
-        {/* 控制區 (sticky) */}
+        {/* Sticky 控制區 */}
         <div className="sticky top-0 bg-white z-30 w-full border-b">
           <div className="w-full p-4 max-w-full md:max-w-[80%] mx-auto">
             <div className="flex flex-col gap-4">
-
-              {/* 日期切換 */}
+              {/* 標題 + 日期切換 */}
               <div className="flex items-center gap-4">
                 <h1 className="text-2xl font-bold">團隊行程</h1>
-                <div className="flex gap-2">
+                <div className="flex gap-2 overflow-auto">
                   {festivalDates[currentFestival].map((d) => (
                     <button
                       key={d}
                       onClick={() => handleDateChange(d)}
-                      className={`px-4 py-2 rounded-lg transition-colors ${
+                      className={`px-4 py-2 rounded-lg transition-colors whitespace-nowrap ${
                         currentDate === d
                           ? 'bg-[#EF6D21] text-white'
                           : 'bg-gray-200 text-gray-700'
@@ -122,7 +122,7 @@ function TeamSchedule() {
                 </div>
               </div>
 
-              {/* 音樂祭與舞台選擇 */}
+              {/* 音樂祭切換 + 舞台篩選 */}
               <div className="flex items-center gap-4">
                 <div className="flex gap-2">
                   <button
@@ -157,12 +157,12 @@ function TeamSchedule() {
               <div className="flex items-center justify-between">
                 <div>
                   {userTeams.length > 0 ? (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 overflow-auto">
                       {userTeams.map((team) => (
                         <button
                           key={team.id}
                           onClick={() => setSelectedTeamId(team.id)}
-                          className={`px-4 py-2 rounded-lg transition-colors ${
+                          className={`px-4 py-2 rounded-lg transition-colors whitespace-nowrap ${
                             selectedTeamId === team.id
                               ? 'bg-blue-500 text-white'
                               : 'bg-gray-200 text-gray-700'
@@ -187,7 +187,7 @@ function TeamSchedule() {
           </div>
         </div>
 
-        {/* 加入團隊彈窗 */}
+        {/* 加入團隊 Modal */}
         {showJoinModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
             <div className="bg-white p-6 rounded-lg w-80">
@@ -214,7 +214,7 @@ function TeamSchedule() {
           </div>
         )}
 
-        {/* 表格顯示區 */}
+        {/* 表格區（垂直＋水平內層捲動，並限制高度與 personal page 一致） */}
         <div className="flex-1">
           <div className="w-full max-w-full md:max-w-[80%] mx-auto">
             <div className="overflow-auto max-h-[calc(100vh-200px)] pb-4">
@@ -224,20 +224,24 @@ function TeamSchedule() {
                     <th className="sticky left-0 top-0 z-30 bg-white p-2 min-w-[80px] text-sm">
                       時間
                     </th>
-                    {filteredStages.map((stage) => (
-                      <th
-                        key={stage.id}
-                        className={`sticky top-0 z-20 ${stage.color} text-white p-2 min-w-[160px]`}
-                      >
-                        {stage.name}
-                      </th>
-                    ))}
+                    {stages
+                      .filter((s) => selectedStages.includes(s.id))
+                      .map((stage) => (
+                        <th
+                          key={stage.id}
+                          className={`sticky top-0 z-20 ${stage.color} text-white p-2 min-w-[160px]`}
+                        >
+                          {stage.name}
+                        </th>
+                      ))}
                   </tr>
                 </thead>
                 <tbody>
                   <ScheduleTable
-                    performances={performances}
-                    stages={filteredStages}
+                    performances={filteredPerformances}
+                    stages={stages.filter((s) =>
+                      selectedStages.includes(s.id)
+                    )}
                     isTeamView
                     date={currentDate}
                     selectedPerformances={selectedPerformances}
@@ -253,5 +257,3 @@ function TeamSchedule() {
     </div>
   );
 }
-
-export default TeamSchedule;
