@@ -17,28 +17,27 @@ export default function TeamSchedule() {
   const [selectedTeamId, setSelectedTeamId] = useState('');
   const [showJoinModal, setShowJoinModal] = useState(false);
 
-  // 可加入的靜態團隊（示範用）
+  // 靜態可選團隊
   const availableTeams = [
     { id: 'teamX', name: '團隊 X' },
     { id: 'teamY', name: '團隊 Y' },
     { id: 'teamZ', name: '團隊 Z' },
   ];
 
-  // 各音樂祭可選日期
+  // 音樂祭可選日期
   const festivalDates = {
     megaport: ['2025-03-29', '2025-03-30'],
-    wild: ['2025-04-26', '2025-04-27'],
+    wild:     ['2025-04-26', '2025-04-27'],
   };
 
-  // 當音樂祭或日期切換時，重新載入對應的 stages 與 performances
+  // 當音樂祭或日期變動時，重置 stages、performances、篩選狀態
   useEffect(() => {
-    const newStages =
-      currentFestival === 'megaport' ? megaportStages : wildSeasonStages;
+    const newStages = currentFestival === 'megaport'
+      ? megaportStages
+      : wildSeasonStages;
     setStages(newStages);
-    // 預設全選所有舞台
-    setSelectedStages(newStages.map((s) => s.id));
+    setSelectedStages(newStages.map(s => s.id));
 
-    // 載入假資料
     const list = getPerformancesByFestivalAndDate(
       currentFestival,
       currentDate
@@ -47,49 +46,48 @@ export default function TeamSchedule() {
     setSelectedPerformances(new Set());
   }, [currentFestival, currentDate]);
 
-  // 切換舞台篩選
+  // 舞台切換
   const handleStageToggle = (stageId) => {
-    setSelectedStages((prev) =>
+    setSelectedStages(prev =>
       prev.includes(stageId)
-        ? prev.filter((id) => id !== stageId)
+        ? prev.filter(id => id !== stageId)
         : [...prev, stageId]
     );
   };
 
-  // 切換節目選取（Team view 可用）
+  // 演出選取切換（團隊模式用）
   const handlePerformanceToggle = (performanceId) => {
-    setSelectedPerformances((prev) => {
+    setSelectedPerformances(prev => {
       const next = new Set(prev);
       next.has(performanceId) ? next.delete(performanceId) : next.add(performanceId);
       return next;
     });
   };
 
-  // 切換音樂祭
+  // 音樂祭切換
   const handleFestivalChange = (festival) => {
     setCurrentFestival(festival);
-    // 音樂祭切換後，預設第一天
     setCurrentDate(festivalDates[festival][0]);
   };
 
-  // 切換日期
+  // 日期切換
   const handleDateChange = (date) => {
     setCurrentDate(date);
   };
 
   // 加入團隊
   const handleJoinTeam = (team) => {
-    if (!userTeams.some((t) => t.id === team.id)) {
-      setUserTeams((prev) => [...prev, team]);
+    if (!userTeams.some(t => t.id === team.id)) {
+      setUserTeams(prev => [...prev, team]);
       setSelectedTeamId(team.id);
     }
     setShowJoinModal(false);
   };
 
-  // 篩選後要給 ScheduleTable 的資料
+  // 根據選擇的舞台過濾演出
   const filteredPerformances = useMemo(() => {
     if (selectedStages.length === 0) return performances;
-    return performances.filter((p) => selectedStages.includes(p.stageId));
+    return performances.filter(p => selectedStages.includes(p.stageId));
   }, [performances, selectedStages]);
 
   return (
@@ -99,90 +97,82 @@ export default function TeamSchedule() {
       {/* 預留 Header 高度 */}
       <div className="flex-1 flex flex-col pt-16">
         {/* Sticky 控制區 */}
-        <div className="sticky top-0 bg-white z-30 w-full border-b">
-          <div className="w-full p-4 max-w-full md:max-w-[80%] mx-auto">
-            <div className="flex flex-col gap-4">
-              {/* 標題 + 日期切換 */}
-              <div className="flex items-center gap-4">
-                <h1 className="text-2xl font-bold">團隊行程</h1>
-                <div className="flex gap-2 overflow-auto">
-                  {festivalDates[currentFestival].map((d) => (
+        <div className="sticky top-0 z-30 bg-white border-b">
+          <div className="w-full p-4 max-w-full md:max-w-[80%] mx-auto flex flex-col gap-4">
+            {/* 標題＆日期切換 */}
+            <div className="flex items-center gap-4">
+              <h1 className="text-2xl font-bold">團隊行程</h1>
+              <div className="flex gap-2 overflow-auto">
+                {festivalDates[currentFestival].map(d => (
+                  <button
+                    key={d}
+                    onClick={() => handleDateChange(d)}
+                    className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors ${
+                      currentDate === d
+                        ? 'bg-[#EF6D21] text-white'
+                        : 'bg-gray-200 text-gray-700'
+                    }`}
+                  >
+                    {d.slice(5).replace('-', '/')}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 音樂祭切換 ＋ 舞台篩選 */}
+            <div className="flex items-center gap-4">
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleFestivalChange('megaport')}
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    currentFestival === 'megaport'
+                      ? 'bg-[#EF6D21] text-white'
+                      : 'bg-gray-200 text-gray-700'
+                  }`}
+                >大港開唱</button>
+                <button
+                  onClick={() => handleFestivalChange('wild')}
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    currentFestival === 'wild'
+                      ? 'bg-[#EF6D21] text-white'
+                      : 'bg-gray-200 text-gray-700'
+                  }`}
+                >野人祭</button>
+              </div>
+              <StageFilter
+                stages={stages}
+                selectedStages={selectedStages}
+                onToggle={handleStageToggle}
+              />
+            </div>
+
+            {/* 團隊選擇 */}
+            <div className="flex items-center justify-between">
+              <div className="flex gap-2 overflow-auto">
+                {userTeams.length > 0 ? (
+                  userTeams.map(team => (
                     <button
-                      key={d}
-                      onClick={() => handleDateChange(d)}
-                      className={`px-4 py-2 rounded-lg transition-colors whitespace-nowrap ${
-                        currentDate === d
-                          ? 'bg-[#EF6D21] text-white'
+                      key={team.id}
+                      onClick={() => setSelectedTeamId(team.id)}
+                      className={`px-4 py-2 rounded-lg whitespace-nowrap transition-colors ${
+                        selectedTeamId === team.id
+                          ? 'bg-blue-500 text-white'
                           : 'bg-gray-200 text-gray-700'
                       }`}
                     >
-                      {d.slice(5).replace('-', '/')}
+                      {team.name}
                     </button>
-                  ))}
-                </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500">你尚未加入任何團隊</p>
+                )}
               </div>
-
-              {/* 音樂祭切換 + 舞台篩選 */}
-              <div className="flex items-center gap-4">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleFestivalChange('megaport')}
-                    className={`px-4 py-2 rounded-lg transition-colors ${
-                      currentFestival === 'megaport'
-                        ? 'bg-[#EF6D21] text-white'
-                        : 'bg-gray-200 text-gray-700'
-                    }`}
-                  >
-                    大港開唱
-                  </button>
-                  <button
-                    onClick={() => handleFestivalChange('wild')}
-                    className={`px-4 py-2 rounded-lg transition-colors ${
-                      currentFestival === 'wild'
-                        ? 'bg-[#EF6D21] text-white'
-                        : 'bg-gray-200 text-gray-700'
-                    }`}
-                  >
-                    野人祭
-                  </button>
-                </div>
-                <StageFilter
-                  stages={stages}
-                  selectedStages={selectedStages}
-                  onToggle={handleStageToggle}
-                />
-              </div>
-
-              {/* 團隊選擇 */}
-              <div className="flex items-center justify-between">
-                <div>
-                  {userTeams.length > 0 ? (
-                    <div className="flex gap-2 overflow-auto">
-                      {userTeams.map((team) => (
-                        <button
-                          key={team.id}
-                          onClick={() => setSelectedTeamId(team.id)}
-                          className={`px-4 py-2 rounded-lg transition-colors whitespace-nowrap ${
-                            selectedTeamId === team.id
-                              ? 'bg-blue-500 text-white'
-                              : 'bg-gray-200 text-gray-700'
-                          }`}
-                        >
-                          {team.name}
-                        </button>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500">你尚未加入任何團隊</p>
-                  )}
-                </div>
-                <button
-                  onClick={() => setShowJoinModal(true)}
-                  className="px-4 py-2 bg-green-500 text-white rounded-lg"
-                >
-                  加入團隊
-                </button>
-              </div>
+              <button
+                onClick={() => setShowJoinModal(true)}
+                className="px-4 py-2 bg-green-500 text-white rounded-lg"
+              >
+                加入團隊
+              </button>
             </div>
           </div>
         </div>
@@ -193,7 +183,7 @@ export default function TeamSchedule() {
             <div className="bg-white p-6 rounded-lg w-80">
               <h2 className="text-xl font-bold mb-4">選擇要加入的團隊</h2>
               <ul className="space-y-2 mb-4">
-                {availableTeams.map((team) => (
+                {availableTeams.map(team => (
                   <li key={team.id}>
                     <button
                       onClick={() => handleJoinTeam(team)}
@@ -214,10 +204,10 @@ export default function TeamSchedule() {
           </div>
         )}
 
-        {/* 表格區（垂直＋水平內層捲動，並限制高度與 personal page 一致） */}
+        {/* 表格區（仿 PersonalSchedule：上下左右捲動只在這裡） */}
         <div className="flex-1">
           <div className="w-full max-w-full md:max-w-[80%] mx-auto">
-            <div className="overflow-auto max-h-[calc(100vh-200px)] pb-4">
+            <div className="overflow-auto max-h-[calc(100vh-250px)] pb-4">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
@@ -225,8 +215,8 @@ export default function TeamSchedule() {
                       時間
                     </th>
                     {stages
-                      .filter((s) => selectedStages.includes(s.id))
-                      .map((stage) => (
+                      .filter(s => selectedStages.includes(s.id))
+                      .map(stage => (
                         <th
                           key={stage.id}
                           className={`sticky top-0 z-20 ${stage.color} text-white p-2 min-w-[160px]`}
@@ -239,9 +229,7 @@ export default function TeamSchedule() {
                 <tbody>
                   <ScheduleTable
                     performances={filteredPerformances}
-                    stages={stages.filter((s) =>
-                      selectedStages.includes(s.id)
-                    )}
+                    stages={stages.filter(s => selectedStages.includes(s.id))}
                     isTeamView
                     date={currentDate}
                     selectedPerformances={selectedPerformances}

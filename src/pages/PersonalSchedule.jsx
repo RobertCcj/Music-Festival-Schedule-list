@@ -100,7 +100,7 @@ function PersonalSchedule() {
                             : 'bg-gray-200 text-gray-700'
                         }`}
                       >
-                        3/29
+                        03/29
                       </button>
                       <button
                         onClick={() => handleDateChange('2025-03-30')}
@@ -110,7 +110,7 @@ function PersonalSchedule() {
                             : 'bg-gray-200 text-gray-700'
                         }`}
                       >
-                        3/30
+                        03/30
                       </button>
                     </>
                   )}
@@ -124,7 +124,7 @@ function PersonalSchedule() {
                             : 'bg-gray-200 text-gray-700'
                         }`}
                       >
-                        4/26
+                        04/26
                       </button>
                       <button
                         onClick={() => handleDateChange('2025-04-27')}
@@ -134,7 +134,7 @@ function PersonalSchedule() {
                             : 'bg-gray-200 text-gray-700'
                         }`}
                       >
-                        4/27
+                        04/27
                       </button>
                     </>
                   )}
