@@ -14,10 +14,43 @@ function Login() {
     navigate('/personal-schedule'); // Changed from /dashboard to /personal-schedule
   };
 
-  const handleSpotifyLogin = () => {
-    // Handle Spotify login logic here
-    console.log('Spotify login clicked');
+  function base64urlencode(str) {
+    return btoa(String.fromCharCode.apply(null, new Uint8Array(str)))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+  }
+  
+  async function generateCodeChallenge(codeVerifier) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(codeVerifier);
+    const digest = await window.crypto.subtle.digest('SHA-256', data);
+    return base64urlencode(digest);
+  }
+  
+  function generateCodeVerifier() {
+    const array = new Uint8Array(64);
+    window.crypto.getRandomValues(array);
+    return Array.from(array, dec => ('0' + dec.toString(16)).slice(-2)).join('');
+  }
+  
+  const handleSpotifyLogin = async () => {
+    const clientId = '6fa9ec7028c949dab0487d51a1d38476'; // ← 替換為你的
+    const redirectUri = 'http://127.0.0.1:5173/callback';
+    const scope = 'user-read-email user-read-private';
+  
+    const codeVerifier = generateCodeVerifier();
+    const codeChallenge = await generateCodeChallenge(codeVerifier);
+  
+    localStorage.setItem('pkce_code_verifier', codeVerifier);
+  
+    const authUrl = `https://accounts.spotify.com/authorize?` +
+      `response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}` +
+      `&scope=${encodeURIComponent(scope)}&code_challenge_method=S256&code_challenge=${codeChallenge}`;
+  
+    window.location.href = authUrl;
   };
+  
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
