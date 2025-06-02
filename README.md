@@ -62,3 +62,30 @@ git clone https://github.com/your-username/megaport-planner.git
 cd megaport-planner
 npm install
 npm run dev
+ˋˋˋ
+環境變數設定（串接 Spotify）
+若要啟用 Spotify OAuth 登入功能，請在專案根目錄建立 .env 檔案，並加入以下內容：
+
+env
+複製
+編輯
+VITE_SPOTIFY_CLIENT_ID=你的_spotify_client_id
+註：此專案採用 PKCE 授權流程，無需 client secret。
+
+---
+
+## 📅 開發進度追蹤
+
+- [x] 個人節目選擇與舞台濾鏡切換
+- [x] 團隊行程統計（票數亮度顯示）
+- [x] Spotify OAuth 登入整合（PKCE 流程）
+- [ ] 使用 Redux 儲存跨頁節目選擇狀態
+- [ ] 串接 Spotify Web API 建立歌單
+
+---
+
+## 🙋‍♂️ 關於我
+
+本專案由 [RobertChuang] 開發，旨在展示我在前端工程開發、元件設計與 API 整合上的實作能力。
+
+若您正在尋找具備 React 開發經驗、熟悉 Tailwind CSS 且能獨立處理 OAuth 整合的前端工程師，歡迎與我聯繫 🙌
