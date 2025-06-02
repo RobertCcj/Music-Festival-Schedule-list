@@ -62,7 +62,7 @@ git clone https://github.com/your-username/megaport-planner.git
 cd megaport-planner
 npm install
 npm run dev
-ˋˋˋ
+
 環境變數設定（串接 Spotify）
 若要啟用 Spotify OAuth 登入功能，請在專案根目錄建立 .env 檔案，並加入以下內容：
 
