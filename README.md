@@ -1,3 +1,5 @@
+-此readme尚未完全完成，持續修改中
+
 # 音樂祭行前節目規劃平台 Megaport Planner
 
 > 🎧 結合 React、Tailwind CSS 與 Spotify OAuth，打造你的音樂祭前個人／團隊節目行程表
