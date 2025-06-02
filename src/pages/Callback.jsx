@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUserProfile } from '../contexts/UserProfileContext';
 
 function Callback() {
   const navigate = useNavigate();
+  const { login } = useUserProfile();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -16,7 +18,7 @@ function Callback() {
     }
 
     const exchangeToken = async () => {
-      const clientId = '6fa9ec7028c949dab0487d51a1d38476'; // ← 替換為你的 client ID
+      const clientId = '6fa9ec7028c949dab0487d51a1d38476'; // ← 換成你的 client ID
       const redirectUri = 'http://127.0.0.1:5173/callback';
 
       const body = new URLSearchParams({
@@ -40,9 +42,7 @@ function Callback() {
 
         if (data.access_token) {
           localStorage.setItem('spotify_access_token', data.access_token);
-          console.log('✅ 登入成功，Access Token:', data.access_token);
 
-          // ✅ 抓取使用者資訊
           const userResponse = await fetch('https://api.spotify.com/v1/me', {
             headers: {
               Authorization: `Bearer ${data.access_token}`
@@ -51,10 +51,13 @@ function Callback() {
 
           const userData = await userResponse.json();
           console.log('🎧 Spotify 使用者資訊:', userData);
-          console.log(`👤 用戶名稱: ${userData.display_name}`);
-          console.log(`📧 Email: ${userData.email}`);
 
-          // 你也可以在這裡存 userData 至 localStorage 或全域 state
+          login({
+            name: userData.display_name,
+            email: userData.email,
+            avatar: userData.images?.[0]?.url ?? null
+          });
+
           navigate('/personal-schedule');
         } else {
           console.error('❌ 無法取得 token:', data);

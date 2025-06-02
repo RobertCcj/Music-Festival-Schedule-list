@@ -9,52 +9,57 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle login logic here
     console.log('Login attempt:', { username, password });
-    navigate('/personal-schedule'); // Changed from /dashboard to /personal-schedule
+
+    // 假資料模擬登入狀態
+    const guestUser = {
+      name: username || '訪客用戶',
+      email: 'guest@example.com',
+      avatar: null
+    };
+    localStorage.setItem('spotify_user_profile', JSON.stringify(guestUser));
+    navigate('/personal-schedule');
   };
 
-  function base64urlencode(str) {
+  const base64urlencode = (str) => {
     return btoa(String.fromCharCode.apply(null, new Uint8Array(str)))
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
       .replace(/=+$/, '');
-  }
-  
-  async function generateCodeChallenge(codeVerifier) {
+  };
+
+  const generateCodeVerifier = () => {
+    const array = new Uint8Array(64);
+    window.crypto.getRandomValues(array);
+    return Array.from(array, dec => ('0' + dec.toString(16)).slice(-2)).join('');
+  };
+
+  const generateCodeChallenge = async (codeVerifier) => {
     const encoder = new TextEncoder();
     const data = encoder.encode(codeVerifier);
     const digest = await window.crypto.subtle.digest('SHA-256', data);
     return base64urlencode(digest);
-  }
-  
-  function generateCodeVerifier() {
-    const array = new Uint8Array(64);
-    window.crypto.getRandomValues(array);
-    return Array.from(array, dec => ('0' + dec.toString(16)).slice(-2)).join('');
-  }
-  
+  };
+
   const handleSpotifyLogin = async () => {
-    const clientId = '6fa9ec7028c949dab0487d51a1d38476'; // ← 替換為你的
+    const clientId = '6fa9ec7028c949dab0487d51a1d38476';
     const redirectUri = 'http://127.0.0.1:5173/callback';
     const scope = 'user-read-email user-read-private';
-  
+
     const codeVerifier = generateCodeVerifier();
     const codeChallenge = await generateCodeChallenge(codeVerifier);
-  
     localStorage.setItem('pkce_code_verifier', codeVerifier);
-  
+
     const authUrl = `https://accounts.spotify.com/authorize?` +
       `response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}` +
       `&scope=${encodeURIComponent(scope)}&code_challenge_method=S256&code_challenge=${codeChallenge}`;
-  
+
     window.location.href = authUrl;
   };
-  
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      {/* Orange background with logo - Always visible */}
+      {/* Orange background with logo */}
       <div className="w-full md:w-1/2 bg-[#EF6D21] flex items-center justify-center py-8 md:py-0">
         <div className="text-white text-center">
           <img 
@@ -69,7 +74,7 @@ function Login() {
       <div className="w-full md:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">登入</h1>
-          
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700">名稱</label>
