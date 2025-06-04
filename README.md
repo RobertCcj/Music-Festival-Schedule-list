@@ -46,14 +46,15 @@
 ---
 
 ## 📂 專案結構簡介
-ˋˋˋ
+
+```
 src/
 ├── components/ # 共用元件（Header, ScheduleTable, StageFilter 等）
 ├── pages/ # 頁面（Login, PersonalSchedule, TeamSchedule 等）
 ├── data/ # 前端假資料（演出與舞台清單）
 ├── contexts/ # 使用者登入狀態管理（Context）
 ├── utils/ # 共用工具函數（如 className 合併）
-ˋˋˋ
+```
 
 ---
 
@@ -64,7 +65,7 @@ git clone https://github.com/your-username/megaport-planner.git
 cd megaport-planner
 npm install
 npm run dev
-ˋˋˋ
+```
 
 環境變數設定（串接 Spotify）
 若要啟用 Spotify OAuth 登入功能，請在專案根目錄建立 .env 檔案，並加入以下內容：
@@ -89,6 +90,13 @@ VITE_SPOTIFY_CLIENT_ID=你的_spotify_client_id
 
 ## 🙋‍♂️ 關於我
 
-本專案由 [RobertChuang] 開發，旨在展示我在前端工程開發、元件設計與 API 整合上的實作能力。
+本專案由 Robert Chuang 開發，旨在展示我在前端工程開發、元件設計與 API 整合上的實作能力。
 
 若您正在尋找具備 React 開發經驗、熟悉 Tailwind CSS 且能獨立處理 OAuth 整合的前端工程師，歡迎與我聯繫 🙌
+
+📫 **聯絡方式：**
+
+- 🔗 [CakeResume](https://www.cake.me/me/j-cc)
+- 🐱 [GitHub](https://github.com/RobertCcj)
+- 💼 [LinkedIn](https://www.linkedin.com/in/robert-chuang-68b302211/)
+- ✉️ Email：robert0963938708@gmail.com
