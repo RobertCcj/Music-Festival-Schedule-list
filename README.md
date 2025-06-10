@@ -1,4 +1,9 @@
-- 此readme尚未完全完成，持續修改中
+## 🎬 作品展示影片
+
+[![大港開聽作品展示影片](https://img.youtube.com/vi/ON2lDeVqUcI/maxresdefault.jpg)](https://www.youtube.com/watch?v=ON2lDeVqUcI)
+
+> 🔺 點擊上方圖片即可前往觀看展示影片
+
 
 # 音樂祭行前節目規劃平台 Megaport Planner
 
